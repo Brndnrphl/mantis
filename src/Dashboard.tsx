@@ -12,6 +12,7 @@ const Dashboard = () => {
           <IconButton
             icon={FaPlus}
             bgColor="bg-white"
+            hoverColor="bg-slate-200"
             textColor="black"
             className="border-[1px] border-slate-400"
           />
@@ -20,6 +21,7 @@ const Dashboard = () => {
           label="Delete Note"
           icon={FaTrashAlt}
           bgColor="bg-red-600"
+          hoverColor="bg-red-700"
         />
       </div>
     </>
