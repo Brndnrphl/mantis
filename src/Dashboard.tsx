@@ -8,7 +8,7 @@ const Dashboard = () => {
       <div className="flex flex-row items-start place-content-between p-1">
         <h1 className="font-bold text-3xl mb-4">Notes</h1>
         <div className="flex flex-row space-x-4">
-          <IconButton label="New Note" icon={FaPlus} bgColor="bg-black" />
+          <IconButton icon={FaPlus} bgColor="bg-black" />
           <IconButton
             label="Delete Note"
             icon={FaTrashAlt}
