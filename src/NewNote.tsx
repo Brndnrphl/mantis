@@ -4,9 +4,13 @@ import { FaSave } from "react-icons/fa";
 import MarkdownEditor from "./components/MarkdownEditor";
 
 export default function NewNote() {
-  const [markdown, setMarkdown] = useState("# TEST");
+  const [markdown, setMarkdown] = useState("");
   const [title, setTitle] = useState("");
   const [submitStatus, setSubmitStatus] = useState(Boolean);
+
+  const handleMarkdown = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMarkdown(e.target.value);
+  };
 
   const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -31,7 +35,7 @@ export default function NewNote() {
   };
 
   return (
-    <div className="font-inter w-6/12 items-center justify-center">
+    <div className="font-inter items-center justify-center">
       <form
         onSubmit={handleSubmit}
         method="POST"
@@ -54,13 +58,14 @@ export default function NewNote() {
           Note
         </label>
         {/* <textarea
-					value={value}
-					onChange={handleInput}
-					name="note"
-					placeholder="note content"
-					className="h-64 p-2 mb-4 rounded border-2 border-gray-300 resize-none outline-none focus:border-gray-400"
-				/> */}
-        <MarkdownEditor markdown={markdown} setMarkdown={setMarkdown} />
+          value={markdown}
+          onChange={handleMarkdown}
+          name="note"
+          id="mdEditor"
+          placeholder="note content"
+          className="h-64 p-2 mb-4 rounded border-2 border-gray-300 resize-none outline-none focus:border-gray-400"
+        /> */}
+        <MarkdownEditor />
         <button
           type="submit"
           className={`bg-black text-white p-2 font-medium flex flex-row items-center justify-center rounded hover:bg-neutral-800 transition-all ${
