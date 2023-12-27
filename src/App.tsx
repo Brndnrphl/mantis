@@ -1,5 +1,6 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import NewNote from "./NewNote";
+import Dashboard from "./Dashboard";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 
@@ -15,6 +16,7 @@ export default function App() {
           <main className="flex-1 p-4">
             <Routes>
               <Route path="/new_note" element={<NewNote />} />
+              <Route path="/dashboard" element={<Dashboard />} />
             </Routes>
           </main>
         </div>
