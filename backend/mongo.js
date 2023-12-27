@@ -11,19 +11,15 @@ export const addNote = async (req, res) => {
     await client.connect();
     const db = client.db("md_notes");
     const notes = await db.collection("notes").find({}).toArray();
-    const result = await db
-      .collection("notes")
-      .insertOne({
-        title: req.body.title,
-        content: req.body.value,
-        createdAt: new Date(),
-      }); // Assuming the note data is in the request body
-    res
-      .status(201)
-      .json({
-        insertedId: result.insertedId,
-        message: "Note inserted successfully",
-      });
+    const result = await db.collection("notes").insertOne({
+      title: req.body.title,
+      content: req.body.value,
+      createdAt: new Date(),
+    }); // Assuming the note data is in the request body
+    res.status(201).json({
+      insertedId: result.insertedId,
+      message: "Note inserted successfully",
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   } finally {
@@ -74,6 +70,6 @@ export const getAllNotes = async (req, res) => {
 };
 
 // Function to validate user login credentials
-const validateLogin = async (req, res) => {
+const login = async (req, res) => {
   const { username, password } = req.body;
 };

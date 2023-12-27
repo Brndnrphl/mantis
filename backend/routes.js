@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 router.post("/", addNote);
 
 // GRAB ONE NOTE
-router.post("/login", login)
+// router.post("/login", login);
 
 // GRAB ALL NOTES
 

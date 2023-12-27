@@ -9,7 +9,7 @@ const Header = () => {
         <ul className="grid grid-cols-3 items-center">
           <li className="justify-self-start">
             <Link
-              to="/"
+              to="/dashboard"
               className="font-bold text-xl flex flex-row items-center p-2"
             >
               <FaBook className="mr-1" /> MANTIS
