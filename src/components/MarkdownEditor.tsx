@@ -41,6 +41,7 @@ export default function MarkdownEditor({
     >
       <SimpleMDE
         className="w-full"
+        //@ts-ignore
         options={options}
         value={markdown}
         onChange={handleMarkdown}
