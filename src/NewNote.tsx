@@ -8,10 +8,6 @@ export default function NewNote() {
   const [title, setTitle] = useState("");
   const [submitStatus, setSubmitStatus] = useState(Boolean);
 
-  const handleMarkdown = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setMarkdown(e.target.value);
-  };
-
   const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
@@ -57,10 +53,10 @@ export default function NewNote() {
         <label htmlFor="note" className="mb-2 text-lg">
           Note
         </label>
-        <MarkdownEditor />
+        <MarkdownEditor markdown={markdown} setMarkdown={setMarkdown} />
         <button
           type="submit"
-          className={`bg-black text-white p-2 font-medium flex flex-row items-center justify-center rounded hover:bg-neutral-800 transition-all ${
+          className={`bg-black text-white p-2 font-medium flex flex-row items-center justify-center rounded hover:bg-neutral-800 transition-all ease-in-out${
             submitStatus ? "bg-green-500 font-bold hover:bg-green-400" : ""
           }`}
         >

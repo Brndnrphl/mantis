@@ -1,5 +1,32 @@
 /** @type {import('tailwindcss').Config} */
 
+const codeblockCss = {
+  pre: {
+    color: "#1F2933",
+    backgroundColor: "#F5F7FA",
+  },
+  "pre code::before": {
+    "padding-left": "unset",
+  },
+  "pre code::after": {
+    "padding-right": "unset",
+  },
+  code: {
+    backgroundColor: "#F5F7FA",
+    color: "#DD1144",
+    fontWeight: "400",
+    "border-radius": "0.25rem",
+  },
+  "code::before": {
+    content: '""',
+    "padding-left": "0.25rem",
+  },
+  "code::after": {
+    content: '""',
+    "padding-right": "0.25rem",
+  },
+};
+
 export default {
   content: [
     "./index.html",
