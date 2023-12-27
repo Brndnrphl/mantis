@@ -1,14 +1,22 @@
-import express from 'express';
+import express from "express";
 const router = express.Router();
-import { marked } from 'marked';
-import {addNote} from './mongo.js'
+import { marked } from "marked";
+import { addNote } from "./mongo.js";
 
-router.get('/', (req, res) => {
-    res.send("test")
+router.get("/", (req, res) => {
+  res.send("test");
 });
 
-router.post("/", addNote)
+// POST NEW NOTE
+router.post("/", addNote);
 
-// Add more routes as needed
+// GRAB ONE NOTE
+router.post("/login", login)
+
+// GRAB ALL NOTES
+
+// UPDATE NOTE
+
+// DELETE NOTE
 
 export default router;

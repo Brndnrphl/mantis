@@ -2,6 +2,7 @@ import React from "react";
 import IconButton from "./components/iconButton";
 import { FaTrashAlt } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
+import { FaSortAlphaDown } from "react-icons/fa";
 
 const Dashboard = () => {
   return (
@@ -12,7 +13,12 @@ const Dashboard = () => {
           <IconButton
             icon={FaPlus}
             bgColor="bg-white"
-            hoverColor="bg-slate-200"
+            textColor="black"
+            className="border-[1px] border-slate-400"
+          />
+          <IconButton
+            icon={FaSortAlphaDown}
+            bgColor="bg-white"
             textColor="black"
             className="border-[1px] border-slate-400"
           />
@@ -20,8 +26,7 @@ const Dashboard = () => {
         <IconButton
           label="Delete Note"
           icon={FaTrashAlt}
-          bgColor="bg-red-600"
-          hoverColor="bg-red-700"
+          bgColor="bg-red-500"
         />
       </div>
     </>
