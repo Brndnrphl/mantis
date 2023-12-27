@@ -4,7 +4,7 @@ import { FaSave } from "react-icons/fa";
 import MarkdownEditor from "./components/MarkdownEditor";
 
 export default function NewNote() {
-  const [markdown, setMarkdown] = useState("");
+  const [markdown, setMarkdown] = useState<string>("");
   const [title, setTitle] = useState("");
   const [submitStatus, setSubmitStatus] = useState(Boolean);
 
