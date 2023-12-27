@@ -57,14 +57,6 @@ export default function NewNote() {
         <label htmlFor="note" className="mb-2 text-lg">
           Note
         </label>
-        {/* <textarea
-          value={markdown}
-          onChange={handleMarkdown}
-          name="note"
-          id="mdEditor"
-          placeholder="note content"
-          className="h-64 p-2 mb-4 rounded border-2 border-gray-300 resize-none outline-none focus:border-gray-400"
-        /> */}
         <MarkdownEditor />
         <button
           type="submit"

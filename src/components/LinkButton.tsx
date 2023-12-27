@@ -16,7 +16,7 @@ export function LinkButton({ to, icon, label }: LinkButtonProps) {
   return (
     <Link
       to={to}
-      className={`flex flex-row items-center group p-2 rounded-lg ${
+      className={`flex flex-row items-center group p-2 rounded-lg transition-all ease-in-out ${
         isActive ? "bg-gray-200" : ""
       }`}
     >
