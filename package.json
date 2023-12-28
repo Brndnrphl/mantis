@@ -10,6 +10,7 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"@auth0/auth0-react": "^2.2.4",
 		"@babel/runtime": "^7.23.6",
 		"@mdxeditor/editor": "^1.14.3",
 		"@types/highlight.js": "^10.1.0",

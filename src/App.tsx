@@ -3,6 +3,7 @@ import NewNote from "./NewNote";
 import Dashboard from "./Dashboard";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
+import LoginButton from "./components/LoginButton.tsx";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
             <Routes>
               <Route path="/new_note" element={<NewNote />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/" element={<LoginButton />} />
             </Routes>
           </main>
         </div>
