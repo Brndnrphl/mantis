@@ -7,6 +7,7 @@ interface IconButtonProps {
   bgColor: string;
   textColor?: string;
   className?: string;
+  onClick?: () => void;
 }
 
 const colorMapping = {
@@ -22,10 +23,12 @@ const IconButton: React.FC<IconButtonProps> = ({
   bgColor,
   textColor = "text-white",
   className,
+  onClick,
 }) => {
   return (
     <button
       type="button"
+      onClick={onClick}
       className={clsx(
         bgColor,
         textColor,

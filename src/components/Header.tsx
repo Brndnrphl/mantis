@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { FaBook } from "react-icons/fa";
 import { IoIosSearch } from "react-icons/io";
+import Profile from "./Profile";
 
 const Header = () => {
   return (
@@ -26,7 +27,7 @@ const Header = () => {
             </form>
           </li>
           <li className="justify-self-end">
-            <div className="w-8 h-8 rounded-full bg-gray-400 mr-2" />
+            <Profile />
           </li>
         </ul>
       </nav>

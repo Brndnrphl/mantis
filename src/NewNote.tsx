@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { FaSave } from "react-icons/fa";
 import MarkdownEditor from "./components/MarkdownEditor";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function NewNote() {
   const [markdown, setMarkdown] = useState<string>("");
@@ -12,6 +13,8 @@ export default function NewNote() {
     setTitle(e.target.value);
   };
 
+  const { user } = useAuth0();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await fetch("http://localhost:3000/api/notes", {
@@ -19,7 +22,7 @@ export default function NewNote() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ title, value: markdown }),
+      body: JSON.stringify({ title, value: markdown, userId: user?.sub }),
     });
     if (response.ok) {
       setSubmitStatus(true);

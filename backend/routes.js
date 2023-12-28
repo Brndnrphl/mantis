@@ -4,7 +4,7 @@ import { marked } from "marked";
 import { addNote } from "./mongo.js";
 
 router.get("/", (req, res) => {
-  res.send("test");
+  res.send(`${process.env.clientId} and ${process.env.domain} `);
 });
 
 // POST NEW NOTE

@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import IconButton from "./components/iconButton";
 import { FaTrashAlt } from "react-icons/fa";
