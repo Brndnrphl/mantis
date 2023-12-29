@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { FaRegBookmark as BookmarkIcon } from "react-icons/fa";
 import IconButton from "./iconButton";

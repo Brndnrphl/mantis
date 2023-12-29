@@ -41,10 +41,8 @@ export default function Dashboard() {
       setLoading(false);
       setNotes(data);
     };
-    if (notes.length <= 0) {
-      fetchUserNotes();
-    }
-  }, [user, notes]);
+    fetchUserNotes();
+  }, [user]);
 
   return (
     <>

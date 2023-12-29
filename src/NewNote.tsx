@@ -3,6 +3,7 @@ import { useState } from "react";
 import { FaSave } from "react-icons/fa";
 import MarkdownEditor from "./components/MarkdownEditor";
 import { useAuth0 } from "@auth0/auth0-react";
+import { Link } from "react-router-dom";
 
 export default function NewNote() {
   const [markdown, setMarkdown] = useState<string>("");
@@ -58,17 +59,11 @@ export default function NewNote() {
         <MarkdownEditor markdown={markdown} setMarkdown={setMarkdown} />
         <button
           type="submit"
-          className={`bg-black text-white p-2 font-medium flex flex-row items-center justify-center rounded hover:bg-neutral-800 transition-all ease-in-out${
-            submitStatus ? "bg-green-500 font-bold hover:bg-green-400" : ""
-          }`}
+          className={
+            "bg-black text-white p-2 font-medium flex flex-row items-center justify-center rounded hover:bg-neutral-800 transition-all ease-in-out w-full"
+          }
         >
-          {submitStatus ? (
-            "Note Successfully Added!"
-          ) : (
-            <>
-              <FaSave className="mr-2" /> Save Note
-            </>
-          )}
+          <FaSave className="mr-2" /> Save Note
         </button>
       </form>
     </div>
