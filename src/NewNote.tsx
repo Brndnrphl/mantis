@@ -8,12 +8,11 @@ export default function NewNote() {
   const [markdown, setMarkdown] = useState<string>("");
   const [title, setTitle] = useState("");
   const [submitStatus, setSubmitStatus] = useState(Boolean);
+  const { user } = useAuth0();
 
   const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
-
-  const { user } = useAuth0();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

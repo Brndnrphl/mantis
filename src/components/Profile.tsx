@@ -1,8 +1,9 @@
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Profile = () => {
-  const { logout } = useAuth0();
+  const { logout, user } = useAuth0();
   const handleLogout = () => {
+    localStorage.removeItem(`notes-${user?.sub}`);
     logout({ logoutParams: { returnTo: window.location.origin } });
   };
   return (

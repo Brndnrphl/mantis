@@ -15,15 +15,3 @@ app.use("/api/notes", routes);
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on localhost:${process.env.PORT}`);
 });
-
-const authenticateToken = (req, res, next) => {
-  const token = localStorage.getItem("id_token"); // Bearer TOKEN
-  console.log(token);
-  if (token == null) return res.sendStatus(401);
-
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);
-    req.user = user;
-    next();
-  });
-};
