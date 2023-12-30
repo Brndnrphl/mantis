@@ -15,8 +15,12 @@ const NotePage = () => {
     try {
       const response = await fetch(`/api/notes/${id}`);
       const fetchedNote = await response.json();
-      setMarkdown(fetchedNote.content);
-      setTitle(fetchedNote.title);
+      if (fetchedNote.content) {
+        setMarkdown(fetchedNote.content);
+      }
+      if (fetchedNote.title) {
+        setTitle(fetchedNote.title);
+      }
       console.log("djwada");
     } catch (error) {
       console.error("Error fetching note:", error);
@@ -25,8 +29,11 @@ const NotePage = () => {
     }
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    fetchData(noteId);
+    if (noteId) {
+      fetchData(noteId);
+    }
   }, [noteId]);
 
   return loading ? (
