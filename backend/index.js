@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import routes from "./routes.js";
 import process from "process";
 import cors from "cors";
-import jwt from "jsonwebtoken";
 
 dotenv.config({ path: ".env" });
 const app = express();

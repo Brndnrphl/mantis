@@ -1,11 +1,14 @@
 import { MongoClient, ObjectId } from "mongodb";
 import process from "process";
+import dotenv from "dotenv";
+dotenv.config({ path: ".env" });
+import mongoose from "mongoose";
+import Note from "./models.js";
+mongoose.connect(`${process.env.MONGO_URI}`);
 
+// Function to add a note
 export const addNote = async (req, res) => {
-  const client = new MongoClient(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  const client = new MongoClient(process.env.MONGO_URI);
 
   try {
     await client.connect();
@@ -31,10 +34,7 @@ export const addNote = async (req, res) => {
 
 // Function to grab a single note by ID
 export const getSingleNote = async (req, res) => {
-  const client = new MongoClient(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  const client = new MongoClient(process.env.MONGO_URI);
   try {
     await client.connect();
     const database = client.db("md_notes");
@@ -53,10 +53,7 @@ export const getSingleNote = async (req, res) => {
 
 // Function to grab all notes
 export const getAllNotes = async (req, res) => {
-  const client = new MongoClient(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  const client = new MongoClient(process.env.MONGO_URI);
   const userId = req.query.userId;
 
   try {
@@ -70,3 +67,7 @@ export const getAllNotes = async (req, res) => {
     await client.close();
   }
 };
+
+// Function to update note
+
+// Function to delete note
