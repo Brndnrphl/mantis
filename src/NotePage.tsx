@@ -10,13 +10,14 @@ const NotePage = () => {
   const [markdown, setMarkdown] = useState("");
   const [title, setTitle] = useState("");
 
-  const fetchData = async () => {
+  const fetchData = async (id: string) => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/notes/${noteId}`);
+      const response = await fetch(`/api/notes/${id}`);
       const fetchedNote = await response.json();
       setMarkdown(fetchedNote.content);
       setTitle(fetchedNote.title);
+      console.log("djwada");
     } catch (error) {
       console.error("Error fetching note:", error);
     } finally {
@@ -25,21 +26,21 @@ const NotePage = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData(noteId);
+  }, [noteId]);
 
   return loading ? (
-    <>
+    <div className="flex justify-center items-center h-screen">
       <ColorRing
         visible={true}
-        height="80"
-        width="80"
+        height="40"
+        width="40"
         ariaLabel="blocks-loading"
         wrapperStyle={{}}
         wrapperClass="blocks-wrapper"
         colors={["#000000", "#000000", "#000000", "#000000", "#000000"]}
       />
-    </>
+    </div>
   ) : (
     <>
       <h1 className="font-bold text-3xl mb-4 border-b-[1px] border-b-gray-300 p-2">
