@@ -16,6 +16,13 @@ export default function Sidebar() {
             label="Dashboard"
           />
         </li>
+        <li>
+          <LinkButton
+            to="/notes/659029b0bfb2a66b0f9aa39a"
+            icon={<MdSpaceDashboard />}
+            label="Test Note"
+          />
+        </li>
       </ul>
     </nav>
   );

@@ -12,7 +12,6 @@ interface Note {
 interface NoteContextState {
   notes: Note[];
   note: Note;
-  setNote: () => void;
   fetchNotes: (userId: string) => void;
   fetchNote: (noteId: string) => void;
   setLocalStorage: (userId: string) => void; // Update the type definition
@@ -25,7 +24,6 @@ interface NoteContextState {
 const NoteContext = createContext<NoteContextState>({
   notes: [],
   note: {},
-  setNote: () => {},
   fetchNotes: () => {},
   fetchNote: () => {},
   setLocalStorage: () => {},
@@ -103,7 +101,6 @@ export const NoteProvider: React.FC<{ children: React.ReactNode }> = ({
       value={{
         notes,
         note,
-        setNote: (note: Note) => setNote(note),
         fetchNotes: (userId: string) => fetchNotes(userId),
         fetchNote: (noteId: string) => fetchNote(noteId),
         setLocalStorage: (userId: string) => setLocalStorage(userId), // Update the function definition

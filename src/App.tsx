@@ -8,10 +8,14 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { NoteProvider } from "./NoteContext";
 import NotePage from "./NotePage";
 import { useNotes } from "./NoteContext";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { marked } from "marked";
 
 export default function App() {
   const { isLoading } = useAuth0();
-  const { note } = useNotes();
+  const { noteId } = useParams();
+  const { fetchNote } = useNotes();
 
   if (isLoading) {
     return null;
