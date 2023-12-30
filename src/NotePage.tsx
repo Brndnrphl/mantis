@@ -16,12 +16,12 @@ const NotePage = () => {
       const response = await fetch(`/api/notes/${id}`);
       const fetchedNote = await response.json();
       if (fetchedNote.content) {
-        setMarkdown(fetchedNote.content);
+        const parsed = await marked(fetchedNote.content);
+        setMarkdown(parsed);
       }
       if (fetchedNote.title) {
         setTitle(fetchedNote.title);
       }
-      console.log("djwada");
     } catch (error) {
       console.error("Error fetching note:", error);
     } finally {
@@ -63,7 +63,7 @@ const NotePage = () => {
           prose-pre:p-4
           prose-code:font-normal"
       >
-        {parse(marked(markdown))}
+        {parse(markdown)}
       </p>
     </>
   );

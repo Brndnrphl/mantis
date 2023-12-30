@@ -1,5 +1,6 @@
 import { LinkButton } from "./LinkButton";
 import { FaPlus } from "react-icons/fa6";
+import { FaBookmark } from "react-icons/fa";
 import { MdSpaceDashboard } from "react-icons/md";
 
 export default function Sidebar() {
@@ -17,18 +18,10 @@ export default function Sidebar() {
           />
         </li>
         <li>
-          <LinkButton
-            to="/notes/659029b0bfb2a66b0f9aa39a"
-            icon={<MdSpaceDashboard />}
-            label="Test Note"
-          />
-        </li>
-        <li>
-          <LinkButton
-            to="/notes/658fdd12440ce27895d3ca33"
-            icon={<MdSpaceDashboard />}
-            label="Test Note!"
-          />
+          <p className="text-gray-500 flex flex-row items-center group p-2 mt-8 mb-4 transition-all ease-in-out border-b-[1px]">
+            <FaBookmark className="ml-2" />
+            <span className="ml-2">Bookmarked Notes</span>
+          </p>
         </li>
       </ul>
     </nav>

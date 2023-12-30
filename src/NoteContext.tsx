@@ -6,6 +6,7 @@ interface Note {
   _id: string;
   title: string;
   content: string;
+  bookmarked: boolean;
 }
 
 // Define the shape of the context state
@@ -23,7 +24,12 @@ interface NoteContextState {
 // Create the context with a default value
 const NoteContext = createContext<NoteContextState>({
   notes: [],
-  note: {},
+  note: {
+    _id: "",
+    title: "",
+    content: "",
+    bookmarked: false,
+  },
   fetchNotes: () => {},
   fetchNote: () => {},
   setLocalStorage: () => {},

@@ -15,6 +15,7 @@ export const addNote = async (req, res) => {
       title: req.body.title,
       content: req.body.value,
       userId: req.body.userId,
+      bookmarked: false,
       // createdAt: new Date()
     }); // Assuming the note data is in the request body
     res.status(201).json({

@@ -55,7 +55,6 @@ export default function Dashboard() {
             note={note.content}
             title={note.title}
             link={`/notes/${note._id}`}
-            // timestamp={note.createdAt}
           />
         ))}
       </div>

@@ -7,7 +7,8 @@ interface IconButtonProps {
   bgColor: string;
   textColor?: string;
   className?: string;
-  onClick?: () => void;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  onClick?: (e: any) => any;
 }
 
 const colorMapping = {
