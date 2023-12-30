@@ -4,45 +4,22 @@ import { FaTrashAlt, FaSortAlphaDown } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import NoteCard from "./components/NoteCard";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect, useState } from "react";
-import { ColorRing } from "react-loader-spinner";
-
-interface Note {
-  _id: string;
-  content: string;
-  title: string;
-  createdAt: string;
-}
+import { useEffect } from "react";
+import { useNotes } from "./NoteContext";
 
 export default function Dashboard() {
   const { user } = useAuth0();
-  const [loading, setLoading] = useState(false);
+  const { notes, fetchNotes, getLocalStorage, setLocalStorage } = useNotes();
+  const userID = user?.sub;
 
-  const getStorageKey = () => {
-    return `notes-${user?.sub}`;
-  };
-
-  const [notes, setNotes] = useState(() => {
-    const key = getStorageKey();
-    const savedNotes = localStorage.getItem(key);
-    return savedNotes ? JSON.parse(savedNotes) : [];
-  });
-
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    const key = getStorageKey();
-    localStorage.setItem(key, JSON.stringify(notes));
-  }, [notes, getStorageKey]);
-
-  useEffect(() => {
-    const fetchUserNotes = async () => {
-      setLoading(true);
-      const res = await fetch(`/api/notes?userId=${user?.sub}`);
-      const data = await res.json();
-      setLoading(false);
-      setNotes(data);
-    };
-    fetchUserNotes();
-  }, [user]);
+    if (userID) {
+      fetchNotes(userID);
+      setLocalStorage(userID);
+      getLocalStorage(userID);
+    }
+  }, [fetchNotes, userID]);
 
   return (
     <>
@@ -63,17 +40,6 @@ export default function Dashboard() {
             textColor="black"
             className="border-[1px] border-slate-400"
           />
-          {loading && (
-            <ColorRing
-              visible={loading}
-              height="40"
-              width="40"
-              ariaLabel="color-ring-loading"
-              wrapperStyle={{}}
-              wrapperClass="color-ring-wrapper"
-              colors={["#000000"]}
-            />
-          )}
         </div>
         <IconButton
           label="Delete Note"
@@ -82,12 +48,14 @@ export default function Dashboard() {
         />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {notes.map((note: Note) => (
+        {notes.map((note, index) => (
           <NoteCard
+            index={index}
             key={note._id}
             note={note.content}
             title={note.title}
-            timestamp={note.createdAt}
+            link={`/notes/${note._id}`}
+            // timestamp={note.createdAt}
           />
         ))}
       </div>

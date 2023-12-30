@@ -5,9 +5,13 @@ import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import AuthCheck from "./components/AuthCheck";
 import { useAuth0 } from "@auth0/auth0-react";
+import { NoteProvider } from "./NoteContext";
+import NotePage from "./NotePage";
+import { useNotes } from "./NoteContext";
 
 export default function App() {
   const { isLoading } = useAuth0();
+  const { note } = useNotes();
 
   if (isLoading) {
     return null;
@@ -24,10 +28,13 @@ export default function App() {
             <div className="border-b-[1px] border-l-[1px] min-h-screen w-3/12" />
             {/* Invisible Sidebar Div */}
             <main className="flex-1 p-4">
-              <Routes>
-                <Route path="/new_note" element={<NewNote />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-              </Routes>
+              <NoteProvider>
+                <Routes>
+                  <Route path="/notes/:noteId" element={<NotePage />} />
+                  <Route path="/new_note" element={<NewNote />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                </Routes>
+              </NoteProvider>
             </main>
           </div>
         </div>

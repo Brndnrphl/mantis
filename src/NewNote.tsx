@@ -3,13 +3,16 @@ import { useState } from "react";
 import { FaSave } from "react-icons/fa";
 import MarkdownEditor from "./components/MarkdownEditor";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { ColorRing } from "react-loader-spinner";
 
 export default function NewNote() {
   const [markdown, setMarkdown] = useState<string>("");
   const [title, setTitle] = useState("");
-  const [submitStatus, setSubmitStatus] = useState(Boolean);
+  const [, setSubmitStatus] = useState(Boolean);
+  const [loading, isLoading] = useState(false);
   const { user } = useAuth0();
+  const navigate = useNavigate();
 
   const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -17,6 +20,7 @@ export default function NewNote() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    isLoading(true);
     const response = await fetch("http://localhost:3000/api/notes", {
       method: "POST",
       headers: {
@@ -27,7 +31,9 @@ export default function NewNote() {
     if (response.ok) {
       setSubmitStatus(true);
       setTitle("");
-      setMarkdown(""); // Set markdown to an empty string after the fetch request is completed
+      setMarkdown("");
+      isLoading(false);
+      navigate("/dashboard");
     } else {
       setSubmitStatus(false);
     }
@@ -63,7 +69,21 @@ export default function NewNote() {
             "bg-black text-white p-2 font-medium flex flex-row items-center justify-center rounded hover:bg-neutral-800 transition-all ease-in-out w-full"
           }
         >
-          <FaSave className="mr-2" /> Save Note
+          {loading ? (
+            <ColorRing
+              visible={true}
+              height="30"
+              width="30"
+              ariaLabel="color-ring-loading"
+              wrapperStyle={{}}
+              wrapperClass="color-ring-wrapper"
+              colors={["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]}
+            />
+          ) : (
+            <>
+              <FaSave className="mr-2" /> Save Note
+            </>
+          )}
         </button>
       </form>
     </div>

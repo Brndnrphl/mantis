@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import { addNote, getAllNotes } from "./mongo.js";
+import { addNote, getAllNotes, getSingleNote } from "./mongo.js";
 
 // router.get("/", (req, res) => {
 //   res.send(`${process.env.clientId} and ${process.env.domain} `);
@@ -10,7 +10,7 @@ import { addNote, getAllNotes } from "./mongo.js";
 router.post("/", addNote);
 
 // GRAB ONE NOTE
-// router.post("/login", login);
+router.get("/:id", getSingleNote);
 
 // GRAB ALL NOTES
 router.get("/", getAllNotes);

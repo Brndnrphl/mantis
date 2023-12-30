@@ -4,18 +4,27 @@ import IconButton from "./iconButton";
 import { marked } from "marked";
 
 interface NoteCardProps {
+  index: string;
   note: string;
   title: string;
-  timestamp: string;
+  timestamp?: string;
+  link: string;
 }
 
-export default function NoteCard({ note, title, timestamp }: NoteCardProps) {
+export default function NoteCard({
+  index,
+  note,
+  title,
+  timestamp,
+  link,
+}: NoteCardProps) {
   const renderedNote = marked.parse(note);
   return (
     <>
       <Link
-        className="border shadow-sm rounded-lg p-4 relative w-80 h-52 overflow-y-scroll"
-        to="#"
+        className="border shadow-sm rounded-lg p-4 relative w-80 h-52 overflow-y-scroll scrollbar scrollbar-thin scroll-m-2 scrollbar-thumb-black scrollbar-track-slate-300"
+        to={link}
+        id={index}
       >
         <IconButton
           icon={BookmarkIcon}
@@ -36,7 +45,6 @@ export default function NoteCard({ note, title, timestamp }: NoteCardProps) {
           // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
           dangerouslySetInnerHTML={{ __html: renderedNote }}
         />
-        <p className="text-xs text-gray-400">{timestamp}</p>
       </Link>
     </>
   );

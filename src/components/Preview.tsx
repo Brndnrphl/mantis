@@ -3,36 +3,12 @@ import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import "highlight.js/styles/github.min.css";
 
-export default function MarkdownEditor({
-  markdown,
-  setMarkdown,
-}: {
-  markdown: string;
-  setMarkdown: React.Dispatch<React.SetStateAction<string>>;
-}) {
-  const handleMarkdown = (value: string) => {
-    setMarkdown(value);
-  };
-
+export default function Preview({ markdown }: { markdown: string }) {
   const options = useMemo(() => {
     return {
       autofocus: false,
       spellChecker: false,
-      toolbar: [
-        "bold",
-        "italic",
-        "heading",
-        "|",
-        "quote",
-        "unordered-list",
-        "ordered-list",
-        "|",
-        "code",
-        "link",
-        "image",
-        "|",
-        "preview",
-      ],
+      toolbar: false,
       renderingConfig: {
         singleLineBreaks: false,
         codeSyntaxHighlighting: true,
@@ -40,7 +16,7 @@ export default function MarkdownEditor({
           sanitize: true,
         },
       },
-    } as SimpleMDE.Options;
+    } as SimpleMDE.Options
   }, []);
 
   return (
@@ -59,7 +35,6 @@ export default function MarkdownEditor({
         //@ts-ignore
         options={options}
         value={markdown}
-        onChange={handleMarkdown}
       />
     </div>
   );
