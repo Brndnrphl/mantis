@@ -4,13 +4,14 @@ import { FaTrashAlt, FaSortAlphaDown } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import NoteCard from "./components/NoteCard";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNotes } from "./NoteContext";
 
 export default function Dashboard() {
   const { user } = useAuth0();
   const { notes, fetchNotes, getLocalStorage, setLocalStorage } = useNotes();
   const userID = user?.sub;
+  const [deleteMode, setDeleteMode] = useState(false);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -20,6 +21,10 @@ export default function Dashboard() {
       getLocalStorage(userID);
     }
   }, [fetchNotes, userID]);
+
+  const toggleDeleteMode = () => {
+    setDeleteMode(!deleteMode);
+  };
 
   return (
     <>
@@ -45,6 +50,7 @@ export default function Dashboard() {
           label="Delete Note"
           icon={FaTrashAlt}
           bgColor="bg-red-500"
+          onClick={toggleDeleteMode}
         />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -56,7 +62,8 @@ export default function Dashboard() {
             title={note.title}
             id={note._id}
             bookmarked={note.bookmarked}
-            link={`/notes/${note._id}`}
+            link={!deleteMode ? `/notes/${note._id}` : ""}
+            className={deleteMode ? "opacity-50" : "opacity-100"}
           />
         ))}
       </div>

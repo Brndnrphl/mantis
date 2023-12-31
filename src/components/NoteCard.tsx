@@ -13,6 +13,7 @@ interface NoteCardProps {
   link: string;
   id: string;
   bookmarked: boolean;
+  className: string;
 }
 
 export default function NoteCard({
@@ -22,6 +23,7 @@ export default function NoteCard({
   link,
   id,
   bookmarked,
+  className,
 }: NoteCardProps) {
   const { updateBookmarked } = useBookmarks();
   const renderedNote = marked.parse(note);
@@ -36,7 +38,7 @@ export default function NoteCard({
   return (
     <>
       <Link
-        className="border shadow-sm rounded-lg p-4 relative w-80 h-52 overflow-y-scroll scrollbar-thin scroll-m-2 scrollbar-thumb-black scrollbar-track-slate-300 transition-all ease-in-out"
+        className={`${className} border shadow-sm rounded-lg p-4 relative w-80 h-52 overflow-y-scroll scrollbar-thin scroll-m-2 scrollbar-thumb-black scrollbar-track-slate-300 transition-all ease-in-out`}
         to={link}
         id={index.toString()}
       >
