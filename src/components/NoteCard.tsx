@@ -3,6 +3,7 @@ import { FaRegBookmark as BookmarkIcon, FaBookmark } from "react-icons/fa";
 import IconButton from "./iconButton";
 import { marked } from "marked";
 import { useState } from "react";
+import { useBookmarks } from "../BookmarkContext";
 
 interface NoteCardProps {
   index: number;
@@ -22,24 +23,14 @@ export default function NoteCard({
   id,
   bookmarked,
 }: NoteCardProps) {
+  const { updateBookmarked } = useBookmarks();
   const renderedNote = marked.parse(note);
-  const [bookmark, setBookmark] = useState(bookmarked);
+  const [bookmarkState, setBookmarkState] = useState(bookmarked);
 
-  const updateBookmarked = async (e: React.MouseEvent) => {
+  const handleBookmark = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const newBookmarkState = !bookmark;
-    const response = await fetch(`/api/notes/${id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ bookmarked: newBookmarkState }),
-    });
-    if (response.ok) {
-      setBookmark(newBookmarkState);
-    } else {
-      console.log("failed to update bookmark", response);
-    }
+    await updateBookmarked(id, !bookmarkState);
+    setBookmarkState(!bookmarkState);
   };
 
   return (
@@ -53,7 +44,7 @@ export default function NoteCard({
           icon={bookmarked ? FaBookmark : BookmarkIcon}
           bgColor="bg-white"
           textColor="black"
-          onClick={(e) => updateBookmarked(e)}
+          onClick={(e) => handleBookmark(e)}
           className="border-[1px] border-slate-400 absolute right-2 top-2"
         />
         <h2 className="text-lg font-semibold mb-2">{title}</h2>

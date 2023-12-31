@@ -3,31 +3,17 @@ import { FaPlus } from "react-icons/fa6";
 import { FaBookmark } from "react-icons/fa";
 import { MdSpaceDashboard } from "react-icons/md";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useBookmarks } from "../BookmarkContext";
 
 export default function Sidebar() {
   const { user } = useAuth0();
   const userID = user?.sub;
-  const [bookmarkedNotes, setBookmarkedNotes] = useState([]);
-  const fetchBookmarked = async (userID: string) => {
-    try {
-      const response = await fetch(`/api/notes/bookmarked/${userID}`);
-      if (response.ok) {
-        const bookmarkedNotes = await response.json();
-        setBookmarkedNotes(bookmarkedNotes);
-      } else {
-        console.error("Failed to fetch bookmarked notes");
-      }
-    } catch (error) {
-      console.error("Error fetching bookmarked notes:", error);
-    }
-  };
+  const { bookmarkedNotes, fetchBookmarked } = useBookmarks();
 
   useEffect(() => {
-    if (userID) {
-      fetchBookmarked(userID);
-    }
-  }, [userID]);
+    fetchBookmarked(userID ?? "");
+  }, [userID, fetchBookmarked]);
 
   return (
     <nav className="fixed z-10 flex flex-col border-b-[1px] border-r-[1px] border-b-gray-300 border-r-gray-300 p-4 bg-gray-50 min-h-screen w-3/12">
@@ -44,7 +30,6 @@ export default function Sidebar() {
         </li>
         <li>
           <p className="text-gray-500 flex flex-row items-center group p-2 mt-8 mb-4 transition-all ease-in-out border-b-[1px]">
-            <FaBookmark className="ml-2" />
             <span className="ml-2">Bookmarked Notes</span>
           </p>
         </li>
