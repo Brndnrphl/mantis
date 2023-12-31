@@ -1,6 +1,13 @@
 import express from "express";
 const router = express.Router();
-import { addNote, getNotes, getNote, deleteNote, updateNote } from "./mongo.js";
+import {
+  addNote,
+  getNotes,
+  getBookmarkedNotes,
+  getNote,
+  deleteNote,
+  updateNote,
+} from "./mongo.js";
 
 // router.get("/", (req, res) => {
 //   res.send(`${process.env.clientId} and ${process.env.domain} `);
@@ -14,6 +21,9 @@ router.get("/:id", getNote);
 
 // GRAB ALL NOTES
 router.get("/", getNotes);
+
+// GRAB ALL BOOKMARKED NOTES
+router.get("/bookmarked/:id", getBookmarkedNotes);
 
 // UPDATE NOTE
 router.post("/:id", updateNote);

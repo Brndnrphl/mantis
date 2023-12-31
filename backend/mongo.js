@@ -48,6 +48,19 @@ export const getNotes = async (req, res) => {
   }
 };
 
+// Get all bookmarked notes for a user
+export const getBookmarkedNotes = async (req, res) => {
+  try {
+    const notes = await Note.find({
+      userId: req.params.id,
+      bookmarked: true,
+    });
+    res.json(notes);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // Update a note
 export const updateNote = async (req, res) => {
   try {

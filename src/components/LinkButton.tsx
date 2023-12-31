@@ -11,7 +11,7 @@ interface LinkButtonProps {
 export function LinkButton({ to, icon, label }: LinkButtonProps) {
   const { pathname } = useLocation();
   const isActive = pathname === to;
-  const textColor = isActive ? "text-black" : "text-gray-300";
+  const textColor = isActive ? "text-black" : "text-gray-500";
   const hover = isActive ? "" : "group-hover:text-black";
   return (
     <Link
