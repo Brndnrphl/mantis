@@ -54,6 +54,8 @@ export default function Dashboard() {
             key={note._id}
             note={note.content}
             title={note.title}
+            id={note._id}
+            bookmarked={note.bookmarked}
             link={`/notes/${note._id}`}
           />
         ))}

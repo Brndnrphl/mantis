@@ -1,20 +1,23 @@
 import mongoose from "mongoose";
+import process from "process";
+import dotenv from "dotenv";
+dotenv.config({ path: ".env" });
 
 const NoteSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true,
   },
   content: {
     type: String,
-    required: true,
   },
   userId: {
     type: String,
-    required: true,
+  },
+  bookmarked: {
+    type: Boolean,
   },
 });
 
-const Note = mongoose.model("Note", NoteSchema);
+const Note = mongoose.model("notes", NoteSchema);
 
 export default Note;

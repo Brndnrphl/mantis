@@ -4,70 +4,73 @@ import dotenv from "dotenv";
 dotenv.config({ path: ".env" });
 import mongoose from "mongoose";
 import Note from "./models.js";
-mongoose.connect(`${process.env.MONGO_URI}`);
 
-// Function to add a note
+mongoose.connect(process.env.MONGOOSE_URI);
+setTimeout(() => console.log(mongoose.connection.readyState), 1000);
+
+// Add a note
 export const addNote = async (req, res) => {
-  const client = new MongoClient(process.env.MONGO_URI);
-
   try {
-    await client.connect();
-    const db = client.db("md_notes");
-    const notes = await db.collection("notes").find({}).toArray();
-    const result = await db.collection("notes").insertOne({
+    const note = new Note({
       title: req.body.title,
       content: req.body.value,
       userId: req.body.userId,
       bookmarked: false,
-      // createdAt: new Date()
-    }); // Assuming the note data is in the request body
-    res.status(201).json({
-      insertedId: result.insertedId,
-      message: "Note inserted successfully",
     });
+
+    const newNote = await note.save();
+    res.status(201).json(newNote);
   } catch (error) {
-    res.status(500).json({ error: error.message });
-  } finally {
-    await client.close();
+    res.status(400).json({ message: error.message });
   }
 };
 
-// Function to grab a single note by ID
-export const getSingleNote = async (req, res) => {
-  const client = new MongoClient(process.env.MONGO_URI);
+// Get a single note
+export const getNote = async (req, res) => {
   try {
-    await client.connect();
-    const database = client.db("md_notes");
-    const notes = database.collection("notes");
-    const note = await notes.findOne({ _id: new ObjectId(req.params.id) });
+    const note = await Note.findById(req.params.id);
     if (!note) {
       return res.status(404).json({ message: "Note not found" });
     }
     res.json(note);
   } catch (error) {
-    res.status(500).json({ error: error.message });
-  } finally {
-    await client.close();
+    res.status(500).json({ message: error.message });
   }
 };
 
-// Function to grab all notes
-export const getAllNotes = async (req, res) => {
-  const client = new MongoClient(process.env.MONGO_URI);
-  const userId = req.query.userId;
-
+// Get all notes for a user
+export const getNotes = async (req, res) => {
   try {
-    await client.connect();
-    const db = client.db("md_notes");
-    const notes = await db.collection("notes").find({ userId }).toArray();
-    res.status(200).send(notes);
+    const notes = await Note.find({ userId: req.query.userId });
+    res.json(notes);
   } catch (error) {
-    res.status(500).json({ error: error.message });
-  } finally {
-    await client.close();
+    res.status(500).json({ message: error.message });
   }
 };
 
-// Function to update note
+// Update a note
+export const updateNote = async (req, res) => {
+  try {
+    const note = await Note.findByIdAndUpdate(req.params.id, req.body);
+    if (!note) {
+      return res.status(404).json({ message: "Note not found" });
+    }
+    const updated = await note.save();
+    res.json(updated);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
-// Function to delete note
+// Delete a note
+export const deleteNote = async (req, res) => {
+  try {
+    const note = await Note.findByIdAndDelete(req.params.id);
+    if (!note) {
+      return res.status(404).json({ message: "Note not found" });
+    }
+    res.json({ message: "Note deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
