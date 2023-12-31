@@ -13,7 +13,7 @@ interface IconButtonProps {
 
 const colorMapping = {
   "bg-white": "hover:bg-zinc-100",
-  "bg-black": "hover:bg-white",
+  "bg-black": "hover:bg-zinc-700",
   "bg-red-500": "hover:bg-red-600",
   // Add more mappings as needed
 };

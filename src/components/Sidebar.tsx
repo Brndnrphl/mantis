@@ -4,16 +4,23 @@ import { FaBookmark } from "react-icons/fa";
 import { MdSpaceDashboard } from "react-icons/md";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
-import { useBookmarks } from "../BookmarkContext";
+import { useNoteStore } from "../store";
 
 export default function Sidebar() {
   const { user } = useAuth0();
   const userID = user?.sub;
-  const { bookmarkedNotes, fetchBookmarked } = useBookmarks();
+  const setUserId = useNoteStore((state) => state.setUserId);
+  const getBookmarkedNotes = useNoteStore((state) => state.getBookmarkedNotes);
+  const bookmarkedNotes = useNoteStore((state) => state.bookmarkedNotes);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    fetchBookmarked(userID ?? "");
-  }, [userID, fetchBookmarked]);
+    if (userID) {
+      setUserId(userID ?? "");
+      getBookmarkedNotes();
+      console.log(bookmarkedNotes);
+    }
+  }, [getBookmarkedNotes]);
 
   return (
     <nav className="fixed z-10 flex flex-col border-b-[1px] border-r-[1px] border-b-gray-300 border-r-gray-300 p-4 bg-gray-50 min-h-screen w-3/12">
@@ -35,7 +42,7 @@ export default function Sidebar() {
         </li>
         {bookmarkedNotes.map((bookmarkedNote) => {
           return (
-            <li key={bookmarkedNote._id}>
+            <li key={bookmarkedNote._id.toString()}>
               <LinkButton
                 to={`/notes/${bookmarkedNote._id}`}
                 icon={<FaBookmark />}

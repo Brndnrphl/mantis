@@ -33,7 +33,9 @@
 		"react-loader-spinner": "^6.1.6",
 		"react-router-dom": "^6.21.1",
 		"react-simplemde-editor": "^5.2.0",
-		"tailwind-scrollbar": "^3.0.5"
+		"tailwind-merge": "^2.2.0",
+		"tailwind-scrollbar": "^3.0.5",
+		"zustand": "^4.4.7"
 	},
 	"devDependencies": {
 		"@tailwindcss/typography": "^0.5.10",

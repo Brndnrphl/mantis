@@ -26,7 +26,7 @@ router.get("/", getNotes);
 router.get("/bookmarked/:id", getBookmarkedNotes);
 
 // UPDATE NOTE
-router.post("/:id", updateNote);
+router.patch("/:id", updateNote);
 
 // DELETE NOTE
 router.get("/delete/:id", deleteNote);
