@@ -38,17 +38,22 @@ export default {
       fontFamily: {
         inter: "Inter, sans-serif",
       },
-      typography: {
+      typography: (theme) => ({
         DEFAULT: {
           css: {
+            "pre code": {
+              borderRadius: theme("borderRadius.xl"),
+              borderWidth: "4px",
+              borderColor: theme("colors.stone.100"),
+              backgroundColor: theme("colors.stone.100"),
+            },
             pre: false,
             code: false,
-            "pre code": false,
             "code::before": false,
             "code::after": false,
           },
         },
-      },
+      }),
     },
   },
   plugins: [require("@tailwindcss/typography"), require("tailwind-scrollbar")],

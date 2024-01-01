@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom";
 import { FaRegBookmark as BookmarkIcon, FaBookmark } from "react-icons/fa";
 import IconButton from "./iconButton";
-import { marked } from "marked";
-import { useState } from "react";
+import { Marked } from "marked";
+import { markedHighlight } from "marked-highlight";
+import { useState, useEffect } from "react";
 import { useNoteStore } from "../store";
 import { twMerge } from "tailwind-merge";
+import hljs from "highlight.js";
+import "highlight.js/styles/github.min.css";
+import parse from "html-react-parser";
 
 interface NoteCardProps {
   index: number;
@@ -33,10 +37,20 @@ export default function NoteCard({
   onClick,
 }: NoteCardProps) {
   const toggleBookmark = useNoteStore((state) => state.toggleBookmark);
-  const renderedNote = marked.parse(note);
+  const marked = new Marked(
+    markedHighlight({
+      langPrefix: "hljs language-",
+      highlight(code, lang) {
+        const language = hljs.getLanguage(lang) ? lang : "plaintext";
+        return hljs.highlight(code, { language }).value;
+      },
+    })
+  );
+
+  const [markdown, setMarkdown] = useState("");
   const [bookmarkState, setBookmarkState] = useState(bookmarked);
   const cardStyle = ` ${className} border shadow-sm rounded-lg p-4 relative w-80 h-52 overflow-y-scroll scrollbar-thin scroll-m-2 scrollbar-thumb-black scrollbar-track-slate-300 transition-all ease-in-out`;
-  const deleteModeClickedClass = "opacity-100 border-2 border-red-600";
+  const deleteModeClickedClass = "opacity-100 border-red-600";
 
   const handleBookmark = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -44,13 +58,23 @@ export default function NoteCard({
     setBookmarkState(!bookmarkState);
   };
 
+  useEffect(() => {
+    const handleMarkdown = async () => {
+      if (note) {
+        const parsed = await marked.parse(note);
+        setMarkdown(parsed);
+      }
+    };
+    handleMarkdown();
+  }, [marked, note]);
+
   return (
     <>
       <Link
         className={
           deleteMode
             ? twMerge(
-                "border opacity-50 rounded-lg p-4 relative w-80 h-52 overflow-y-scroll scrollbar-thin scroll-m-2 scrollbar-thumb-black scrollbar-track-slate-300 transition-all ease-in-out",
+                "border-2 opacity-50 rounded-lg p-4 relative w-80 h-52 overflow-y-scroll scrollbar-thin scroll-m-2 scrollbar-thumb-black scrollbar-track-slate-300 transition-all",
                 isClicked ? deleteModeClickedClass : ""
               )
             : cardStyle
@@ -78,9 +102,9 @@ export default function NoteCard({
           prose-pre:rounded-lg
           prose-pre:p-4
           prose-code:font-normal"
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
-          dangerouslySetInnerHTML={{ __html: renderedNote }}
-        />
+        >
+          {parse(markdown)}
+        </p>
       </Link>
     </>
   );
