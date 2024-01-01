@@ -67,10 +67,13 @@ const NotePage = () => {
       </h1>
       <p
         className="
-          text-md mb-2
+          text-md mb-2 
           prose
           prose-indigo   
           max-w-none
+          prose-pre:rounded-lg
+          prose-pre:bg-stone-100
+          prose-code:font-normal
           "
       >
         {parse(markdown)}

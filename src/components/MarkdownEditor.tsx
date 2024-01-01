@@ -44,18 +44,17 @@ export default function MarkdownEditor({
   }, []);
 
   return (
-    <div
-      className="
-      prose
-      prose-indigo   
-      max-w-none
-      prose-pre:rounded-lg
-      prose-pre:p-4
-      prose-code:font-normal
-    "
-    >
+    <div>
       <SimpleMDE
-        className="w-full"
+        className="
+        w-full
+        prose
+        max-w-none
+        text-md mb-2 
+        prose-indigo   
+        prose-pre:rounded-lg
+        prose-pre:p-4
+        prose-code:font-normal"
         //@ts-ignore
         options={options}
         value={markdown}

@@ -16,6 +16,9 @@ const NoteSchema = new mongoose.Schema({
   bookmarked: {
     type: Boolean,
   },
+  createdAt: {
+    type: Date,
+  },
 });
 
 const Note = mongoose.model("notes", NoteSchema);

@@ -100,7 +100,7 @@ export default function NoteCard({
           prose-indigo   
           max-w-none
           prose-pre:rounded-lg
-          prose-pre:p-4
+          prose-pre:bg-stone-100
           prose-code:font-normal"
         >
           {parse(markdown)}

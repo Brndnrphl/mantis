@@ -41,12 +41,12 @@ export default {
       typography: (theme) => ({
         DEFAULT: {
           css: {
-            "pre code": {
-              borderRadius: theme("borderRadius.xl"),
-              borderWidth: "4px",
-              borderColor: theme("colors.stone.100"),
-              backgroundColor: theme("colors.stone.100"),
-            },
+            // "pre code": {
+            //   borderRadius: theme("borderRadius.xl"),
+            //   borderWidth: "4px",
+            //   borderColor: theme("colors.stone.100"),
+            //   backgroundColor: theme("colors.stone.100"),
+            // },
             pre: false,
             code: false,
             "code::before": false,

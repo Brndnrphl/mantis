@@ -16,6 +16,7 @@ export const addNote = async (req, res) => {
       content: req.body.value,
       userId: req.body.userId,
       bookmarked: false,
+      createdAt: new Date().toISOString(),
     });
 
     const newNote = await note.save();
