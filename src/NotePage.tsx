@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { ColorRing } from "react-loader-spinner";
 import parse from "html-react-parser";
 import { Marked } from "marked";
 import { markedHighlight } from "marked-highlight";
 import hljs from "highlight.js";
 import "highlight.js/styles/github.min.css";
+import IconButton from "./components/iconButton";
+import { MdEdit } from "react-icons/md";
 
 const NotePage = () => {
   const { noteId } = useParams();
@@ -62,9 +64,12 @@ const NotePage = () => {
     </div>
   ) : (
     <>
-      <h1 className="font-bold text-3xl mb-4 border-b-[1px] border-b-gray-300 p-2">
-        {title}
-      </h1>
+      <div className="bg-neutral-50 rounded-md shadow border border-neutral-50 mb-8 flex flex-row items-center justify-between">
+        <h1 className="font-bold text-3xl p-2">{title}</h1>
+        <Link to={`/notes/edit/${noteId}`}>
+          <IconButton icon={MdEdit} bgColor="bg-black" className="mr-2" />
+        </Link>
+      </div>
       <p
         className="
           text-md mb-2 

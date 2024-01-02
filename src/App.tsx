@@ -6,6 +6,7 @@ import Sidebar from "./components/Sidebar";
 import AuthCheck from "./components/AuthCheck";
 import { useAuth0 } from "@auth0/auth0-react";
 import NotePage from "./NotePage";
+import EditNote from "./EditNotePage";
 
 export default function App() {
   const { isLoading } = useAuth0();
@@ -26,6 +27,7 @@ export default function App() {
             <main className="flex-1 p-4">
               <Routes>
                 <Route path="/notes/:noteId" element={<NotePage />} />
+                <Route path="/notes/edit/:noteId" element={<EditNote />} />
                 <Route path="/new_note" element={<NewNote />} />
                 <Route path="/dashboard" element={<Dashboard />} />
               </Routes>

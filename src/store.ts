@@ -2,11 +2,13 @@ import { create } from "zustand";
 import { ObjectId } from "mongodb";
 
 interface Note {
-  _id: ObjectId;
-  title: string;
-  content: string;
-  userId: string;
-  bookmarked: boolean;
+  _id?: ObjectId;
+  title?: string;
+  lower_title?: string;
+  content?: string;
+  userId?: string;
+  bookmarked?: boolean;
+  createdAt?: string;
 }
 interface userState {
   userId: string | null;
@@ -14,11 +16,15 @@ interface userState {
 }
 interface NotesState extends userState {
   notes: Note[];
+  note: Note;
+  noteTitle: string;
+  noteContent: string;
   bookmarkedNotes: Note[];
   getNotes: (
     sort?: "asc" | "desc",
     field?: "title" | "createdAt"
   ) => Promise<void>;
+  getNote: (noteId: string) => Promise<void>;
   getBookmarkedNotes: () => Promise<void>;
   updateNote: (noteId: string, note: Note) => Promise<void>;
   toggleBookmark: (noteId: string, bookmarkState: boolean) => Promise<void>;
@@ -26,6 +32,9 @@ interface NotesState extends userState {
 
 export const useNoteStore = create<NotesState>((set) => ({
   notes: [],
+  note: {},
+  noteTitle: "",
+  noteContent: "",
   bookmarkedNotes: [],
   userId: null,
   setUserId: (id) => set(() => ({ userId: id })),
@@ -52,6 +61,21 @@ export const useNoteStore = create<NotesState>((set) => ({
       }
     }
   },
+  getNote: async (noteId) => {
+    try {
+      const response = await fetch(`/api/notes/${noteId}`);
+      const fetchedNote = await response.json();
+      console.log(fetchedNote, `/api/notes/${noteId}`);
+      set(() => ({ note: fetchedNote }));
+      set(() => ({
+        noteTitle: fetchedNote.title,
+        noteContent: fetchedNote.content,
+      }));
+    } catch (error) {
+      console.error("Error fetching note:", error);
+    }
+  },
+
   getBookmarkedNotes: async () => {
     const userId = useNoteStore.getState().userId;
     try {
