@@ -15,7 +15,10 @@ interface userState {
 interface NotesState extends userState {
   notes: Note[];
   bookmarkedNotes: Note[];
-  getNotes: () => Promise<void>;
+  getNotes: (
+    sort?: "asc" | "desc",
+    field?: "title" | "createdAt"
+  ) => Promise<void>;
   getBookmarkedNotes: () => Promise<void>;
   updateNote: (noteId: string, note: Note) => Promise<void>;
   toggleBookmark: (noteId: string, bookmarkState: boolean) => Promise<void>;
@@ -26,16 +29,23 @@ export const useNoteStore = create<NotesState>((set) => ({
   bookmarkedNotes: [],
   userId: null,
   setUserId: (id) => set(() => ({ userId: id })),
-  getNotes: async () => {
+  getNotes: async (sort, field) => {
     const userId = useNoteStore.getState().userId;
     if (userId) {
       try {
-        const response = await fetch(`/api/notes?userId=${userId}`);
+        let url = `/api/notes?userId=${userId}`;
+        if (sort) {
+          url += `&sort=${sort}`;
+        }
+        if (field) {
+          url += `&field=${field}`;
+        }
+        const response = await fetch(url);
         if (response.ok) {
           const fetchedNotes = await response.json();
           set(() => ({ notes: fetchedNotes }));
         } else {
-          console.error("Failed to fetch notes");
+          console.log("Failed to fetch notes");
         }
       } catch (error) {
         console.error("Error fetching notes:", error);

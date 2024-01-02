@@ -13,8 +13,8 @@ const Tooltip = // biome-ignore format: would make too many lines
         {children}
         <div
           className={clsx(
-            "z-20 px-2 opacity-0 transition-all duration-300 delay-100 absolute bottom-3 left-12 flex border-[1px] border-slate-400 rounded bg-white shadow-sm items-center justify-center",
-            isVisible && "opacity-95 delay-300"
+            "whitespace-nowrap z-20 px-2 transition-all duration-200 delay-100 absolute bottom-3 left-12 flex border-[1px] border-slate-400 rounded bg-white shadow-sm items-center justify-center",
+            isVisible ? "visible delay-200" : "invisible"
           )}
         >
           {text}

@@ -1,16 +1,29 @@
+// @ts-nocheck
 import { Link } from "react-router-dom";
 import IconButton from "./components/iconButton";
-import { FaTrashAlt, FaSortAlphaDown, FaCheck } from "react-icons/fa";
+import {
+  FaTrashAlt,
+  FaSortAlphaDown,
+  FaSortAlphaUpAlt,
+  FaCheck,
+  FaSortAmountUp,
+  FaSortAmountDown,
+} from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import NoteCard from "./components/NoteCard";
 import { useEffect, useState } from "react";
 import { useNoteStore } from "./store";
+import Tooltip from "./components/Tooltip";
 
 export default function Dashboard() {
   const notes = useNoteStore((state) => state.notes);
   const getNotes = useNoteStore((state) => state.getNotes);
   const [deleteMode, setDeleteMode] = useState(false);
   const [clickedCardIds, setClickedCardIds] = useState(new Set<string>());
+  const [sortConfig, setSortConfig] = useState({
+    sort: "desc",
+    field: "title",
+  });
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -40,6 +53,43 @@ export default function Dashboard() {
     });
   };
 
+  const handleSort = async () => {
+    if (sortConfig.field === "title") {
+      if (sortConfig.sort === "asc") {
+        await getNotes(sortConfig.sort, sortConfig.field);
+        setSortConfig({ sort: "desc", field: "title" });
+      } else {
+        await getNotes(sortConfig.sort, sortConfig.field);
+        setSortConfig({ sort: "asc", field: "title" });
+      }
+    }
+  };
+
+  const handleSortTime = async () => {
+    sortConfig.field = "createdAt";
+    if (sortConfig.sort === "asc") {
+      await getNotes(sortConfig.sort, sortConfig.field);
+      setSortConfig({ sort: "desc", field: "createdAt" });
+    } else {
+      await getNotes(sortConfig.sort, sortConfig.field);
+      setSortConfig({ sort: "asc", field: "createdAt" });
+    }
+  };
+
+  const handleSortText = () => {
+    if (sortConfig.sort === "asc") {
+      return "a-z";
+    }
+    return "z-a";
+  };
+
+  const handleSortTextTime = () => {
+    if (sortConfig.sort === "asc") {
+      return "oldest first";
+    }
+    return "newest first";
+  };
+
   return (
     <>
       <div className="flex flex-row items-start place-content-between p-1">
@@ -53,12 +103,32 @@ export default function Dashboard() {
               className="border-[1px] border-slate-400"
             />
           </Link>
-          <IconButton
-            icon={FaSortAlphaDown}
-            bgColor="bg-white"
-            textColor="black"
-            className="border-[1px] border-slate-400"
-          />
+          <Tooltip text={`Sort by title: ${handleSortText()}`}>
+            <IconButton
+              icon={
+                sortConfig.sort === "asc" && sortConfig.field === "title"
+                  ? FaSortAlphaDown
+                  : FaSortAlphaUpAlt
+              }
+              bgColor="bg-white"
+              textColor="black"
+              className="border-[1px] border-slate-400"
+              onClick={handleSort}
+            />
+          </Tooltip>
+          <Tooltip text={`Sort by created at: ${handleSortTextTime()}`}>
+            <IconButton
+              icon={
+                sortConfig.sort === "asc" && sortConfig.field === "createdAt"
+                  ? FaSortAmountDown
+                  : FaSortAmountUp
+              }
+              bgColor="bg-white"
+              textColor="black"
+              className="border-[1px] border-slate-400"
+              onClick={handleSortTime}
+            />
+          </Tooltip>
         </div>
         <div className="flex flex-row gap-4 transition-all ease-in-out">
           {deleteMode && (

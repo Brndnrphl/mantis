@@ -6,19 +6,19 @@ import mongoose from "mongoose";
 import Note from "./models.js";
 
 mongoose.connect(process.env.MONGOOSE_URI);
-setTimeout(() => console.log(mongoose.connection.readyState), 1000);
+// setTimeout(() => console.log(mongoose.connection.readyState), 1000);
 
 // Add a note
 export const addNote = async (req, res) => {
   try {
     const note = new Note({
       title: req.body.title,
+      lower_title: req.body.title.toLowerCase(),
       content: req.body.value,
       userId: req.body.userId,
       bookmarked: false,
       createdAt: new Date().toISOString(),
     });
-
     const newNote = await note.save();
     res.status(201).json(newNote);
   } catch (error) {
@@ -42,7 +42,16 @@ export const getNote = async (req, res) => {
 // Get all notes for a user
 export const getNotes = async (req, res) => {
   try {
-    const notes = await Note.find({ userId: req.query.userId });
+    let sortField = req.query.field || "title";
+    const sortDirection = req.query.sort || "asc";
+    if (sortField === "title") {
+      sortField = "lower_title";
+    }
+    const sortOptions = {};
+    sortOptions[sortField] = sortDirection === "desc" ? -1 : 1;
+    const notes = await Note.find({ userId: req.query.userId }).sort(
+      sortOptions
+    );
     res.json(notes);
   } catch (error) {
     res.status(500).json({ message: error.message });

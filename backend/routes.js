@@ -9,10 +9,6 @@ import {
   updateNote,
 } from "./mongo.js";
 
-// router.get("/", (req, res) => {
-//   res.send(`${process.env.clientId} and ${process.env.domain} `);
-// });
-
 // POST NEW NOTE
 router.post("/", addNote);
 
