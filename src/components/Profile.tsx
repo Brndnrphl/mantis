@@ -13,7 +13,7 @@ const Profile = () => {
     <>
       <IconButton
         icon={MdPerson}
-        bgColor="bg-black"
+        bgColor="bg-zinc-400"
         onClick={handleLogout}
         label="logout"
         className={clsx("mr-1 font-medium")}
