@@ -65,7 +65,6 @@ export const useNoteStore = create<NotesState>((set) => ({
     try {
       const response = await fetch(`/api/notes/${noteId}`);
       const fetchedNote = await response.json();
-      console.log(fetchedNote, `/api/notes/${noteId}`);
       set(() => ({ note: fetchedNote }));
       set(() => ({
         noteTitle: fetchedNote.title,

@@ -25,6 +25,6 @@ router.get("/bookmarked/:id", getBookmarkedNotes);
 router.patch("/:id", updateNote);
 
 // DELETE NOTE
-router.get("/delete/:id", deleteNote);
+router.delete("/delete", deleteNote);
 
 export default router;

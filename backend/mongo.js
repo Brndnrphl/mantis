@@ -88,11 +88,18 @@ export const updateNote = async (req, res) => {
 // Delete a note
 export const deleteNote = async (req, res) => {
   try {
-    const note = await Note.findByIdAndDelete(req.params.id);
-    if (!note) {
-      return res.status(404).json({ message: "Note not found" });
+    const noteIds = req.body.noteIds;
+    if (!noteIds || !Array.isArray(noteIds)) {
+      return res.status(400).json({ message: "Invalid note IDs provided" });
     }
-    res.json({ message: "Note deleted successfully" });
+    const result = await Note.deleteMany({ _id: { $in: noteIds } });
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: "No notes found to delete" });
+    }
+    res.json({
+      message: "Notes deleted successfully",
+      deletedCount: result.deletedCount,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

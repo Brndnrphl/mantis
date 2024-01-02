@@ -18,7 +18,6 @@ export default function Sidebar() {
     if (userID) {
       setUserId(userID ?? "");
       getBookmarkedNotes();
-      console.log(bookmarkedNotes);
     }
   }, [getBookmarkedNotes]);
 
@@ -42,11 +41,11 @@ export default function Sidebar() {
         </li>
         {bookmarkedNotes.map((bookmarkedNote) => {
           return (
-            <li key={bookmarkedNote._id.toString()}>
+            <li key={bookmarkedNote._id?.toString()}>
               <LinkButton
                 to={`/notes/${bookmarkedNote._id}`}
                 icon={<FaBookmark />}
-                label={bookmarkedNote.title}
+                label={bookmarkedNote.title ?? ""}
               />
             </li>
           );

@@ -53,6 +53,19 @@ export default function Dashboard() {
     });
   };
 
+  const handleDeletion = async () => {
+    const response = await fetch("/api/notes/delete", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ noteIds: Array.from(clickedCardIds) }),
+    });
+    resetClickedCards();
+    toggleDeleteMode();
+    getNotes();
+  };
+
   const handleSort = async () => {
     if (sortConfig.field === "title") {
       if (sortConfig.sort === "asc") {
@@ -136,7 +149,7 @@ export default function Dashboard() {
               label="Confirm Delete"
               icon={FaCheck}
               bgColor="bg-black"
-              onClick={toggleDeleteMode}
+              onClick={handleDeletion}
             />
           )}
           <IconButton

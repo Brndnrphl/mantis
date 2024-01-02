@@ -1,4 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
+import clsx from "clsx";
+import IconButton from "./iconButton";
+import { MdPerson } from "react-icons/md";
 
 const Profile = () => {
   const { logout, user } = useAuth0();
@@ -7,11 +10,15 @@ const Profile = () => {
     logout({ logoutParams: { returnTo: window.location.origin } });
   };
   return (
-    // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
-    <div
-      className="w-8 h-8 rounded-full bg-gray-400 mr-2"
-      onClick={handleLogout}
-    />
+    <>
+      <IconButton
+        icon={MdPerson}
+        bgColor="bg-black"
+        onClick={handleLogout}
+        label="logout"
+        className={clsx("mr-1 font-medium")}
+      />
+    </>
   );
 };
 
