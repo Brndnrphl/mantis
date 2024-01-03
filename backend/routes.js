@@ -7,6 +7,7 @@ import {
   getNote,
   deleteNote,
   updateNote,
+  searchNotes,
 } from "./mongo.js";
 
 // POST NEW NOTE
@@ -26,5 +27,8 @@ router.patch("/:id", updateNote);
 
 // DELETE NOTE
 router.delete("/delete", deleteNote);
+
+// SEARCH NOTES
+router.get("/search/results", searchNotes);
 
 export default router;

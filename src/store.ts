@@ -16,6 +16,7 @@ interface userState {
 }
 interface NotesState extends userState {
   notes: Note[];
+  searchedNotes: Note[];
   note: Note;
   noteTitle: string;
   noteContent: string;
@@ -26,18 +27,20 @@ interface NotesState extends userState {
   ) => Promise<void>;
   getNote: (noteId: string) => Promise<void>;
   getBookmarkedNotes: () => Promise<void>;
-  updateNote: (noteId: string, note: Note) => Promise<void>;
   toggleBookmark: (noteId: string, bookmarkState: boolean) => Promise<void>;
+  searchNotes: (title: string) => Promise<void>;
 }
 
 export const useNoteStore = create<NotesState>((set) => ({
   notes: [],
   note: {},
+  searchedNotes: [],
   noteTitle: "",
   noteContent: "",
   bookmarkedNotes: [],
   userId: null,
   setUserId: (id) => set(() => ({ userId: id })),
+
   getNotes: async (sort, field) => {
     const userId = useNoteStore.getState().userId;
     if (userId) {
@@ -89,8 +92,16 @@ export const useNoteStore = create<NotesState>((set) => ({
       console.error("Error fetching bookmarked notes:", error);
     }
   },
-  updateNote: async () => {
-    // implementation
+  searchNotes: async (title: string) => {
+    const userId = useNoteStore.getState().userId;
+    const response = await fetch(
+      `/api/notes/search/results?userId=${userId}&title=${title}`
+    );
+    if (response.ok) {
+      const searchedNotes = await response.json();
+      set(() => ({ searchedNotes }));
+      console.log(searchedNotes);
+    }
   },
   toggleBookmark: async (noteId: string, bookmarkState: boolean) => {
     const response = await fetch(`/api/notes/${noteId}`, {

@@ -104,3 +104,21 @@ export const deleteNote = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// Search a note by title
+export const searchNotes = async (req, res) => {
+  try {
+    if (!req.query.title || req.query.title.trim() === "") {
+      // If the title query is empty, return an empty array
+      return res.json([]);
+    }
+    const searchPattern = new RegExp(req.query.title, "i");
+    const searchedNotes = await Note.find({
+      title: { $regex: searchPattern },
+      userId: req.query.userId,
+    });
+    res.json(searchedNotes);
+  } catch {
+    res.status(500).json({ message: error.message });
+  }
+};
